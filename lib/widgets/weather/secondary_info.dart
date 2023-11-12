@@ -21,10 +21,10 @@ class SecondaryInfo extends StatelessWidget {
           scale: 8,
         ),
         const SizedBox(
-          width: 5,
+          width: 3,
         ),
         SizedBox(
-            width: MediaQuery.of(context).size.width * 0.2,
+            width: MediaQuery.of(context).size.width * 0.23,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
