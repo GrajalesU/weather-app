@@ -4,13 +4,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather/weather.dart';
 
-part 'weather_bloc_event.dart';
-part 'weather_bloc_state.dart';
+part 'weather_event.dart';
+part 'weather_state.dart';
 
-class WeatherBlocBloc extends Bloc<WeatherBlocEvent, WeatherBlocState> {
-  WeatherBlocBloc() : super(WeatherBlocInitial()) {
+class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
+  WeatherBloc() : super(WeatherInitial()) {
     on<FetchWeather>((event, emit) async {
-      emit(WeatherBlocLoading());
+      emit(WeatherLoading());
       try {
         await dotenv.load(); // Load the file ".env"
         String apiKey = dotenv.env['API_KEY'] ?? "";
@@ -22,9 +22,9 @@ class WeatherBlocBloc extends Bloc<WeatherBlocEvent, WeatherBlocState> {
           event.position.longitude,
         );
 
-        emit(WeatherBlocSuccess(weather));
+        emit(WeatherSuccess(weather));
       } catch (e) {
-        emit(WeatherBlocFailure());
+        emit(WeatherFailure());
       }
     });
   }

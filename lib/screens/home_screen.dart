@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_app/bloc/weather_bloc_bloc.dart';
+import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/widgets/background.dart';
 import 'package:weather_app/widgets/weather/main_info.dart';
 import 'package:weather_app/widgets/weather/secondary_info.dart';
@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(40, 1.2 * kToolbarHeight, 40, 20),
-          child: BlocBuilder<WeatherBlocBloc, WeatherBlocState>(
+          child: BlocBuilder<WeatherBloc, WeatherState>(
               builder: (context, state) {
-            if (state is WeatherBlocSuccess) {
+            if (state is WeatherSuccess) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Stack(
