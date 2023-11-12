@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/bloc/weather_bloc_bloc.dart';
+import 'package:weather_app/widgets/weather/main_info.dart';
+import 'package:weather_app/widgets/weather/secondary_info.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -112,34 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontSize: 25),
                             ),
                             getWeatherIcon(state.weather.weatherConditionCode!),
-                            Center(
-                              child: Text(
-                                '${state.weather.temperature!.celsius!.round()}° C',
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 55),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                state.weather.weatherDescription!.toUpperCase(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                DateFormat('EEEE dd •  h:mm a', 'es')
+                            MainInfo(
+                                temperature:
+                                    '${state.weather.temperature!.celsius!.round()}° C',
+                                date: DateFormat('EEEE dd •  h:mm a', 'es')
                                     .format(state.weather.date!),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 16),
-                              ),
-                            ),
+                                status: state.weather.weatherDescription!
+                                    .toUpperCase()),
                             const SizedBox(
                               height: 30,
                             ),
@@ -147,72 +128,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/11.png',
-                                        scale: 8,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Amanecer',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                          Text(
-                                            DateFormat()
-                                                .add_jm()
-                                                .format(state.weather.sunrise!),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/12.png',
-                                        scale: 8,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Puesta de sol',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                          Text(
-                                            DateFormat()
-                                                .add_jm()
-                                                .format(state.weather.sunset!),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )
+                                  SecondaryInfo(
+                                      text: 'Amanecer',
+                                      value: DateFormat()
+                                          .add_jm()
+                                          .format(state.weather.sunrise!),
+                                      assetSource: 'assets/11.png'),
+                                  SecondaryInfo(
+                                      text: 'Puesta de sol',
+                                      value: DateFormat()
+                                          .add_jm()
+                                          .format(state.weather.sunset!),
+                                      assetSource: 'assets/12.png'),
                                 ]),
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -224,84 +151,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/13.png',
-                                        scale: 8,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
-                                                'Temperatura máxima',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w300,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                softWrap: true,
-                                              ),
-                                              Text(
-                                                '${state.weather.tempMax!.celsius!.round()}° C',
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ],
-                                          ))
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/14.png',
-                                        scale: 8,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
-                                                'Temperatura mínima',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w300,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                softWrap: true,
-                                              ),
-                                              Text(
-                                                '${state.weather.tempMin!.celsius!.round()}° C',
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ],
-                                          ))
-                                    ],
-                                  )
+                                  SecondaryInfo(
+                                      text: 'Temperatura máxima',
+                                      value:
+                                          '${state.weather.tempMax!.celsius!.round()}° C',
+                                      assetSource: 'assets/13.png'),
+                                  SecondaryInfo(
+                                      text: 'Temperatura mínima',
+                                      value:
+                                          '${state.weather.tempMin!.celsius!.round()}° C',
+                                      assetSource: 'assets/14.png'),
                                 ]),
                           ]),
                     )
