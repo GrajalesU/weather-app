@@ -15,8 +15,9 @@ final class WeatherFailure extends WeatherState {}
 
 final class WeatherSuccess extends WeatherState {
   final Weather weather;
+  final List<List<Weather>> dailyForecast;
 
-  const WeatherSuccess(this.weather);
+  const WeatherSuccess(this.weather, this.dailyForecast);
 
   @override
   List<Object> get props => [weather];

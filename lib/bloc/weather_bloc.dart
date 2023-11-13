@@ -22,10 +22,37 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           event.position.longitude,
         );
 
-        emit(WeatherSuccess(weather));
+        List<Weather> forecast = await weatherFactory.fiveDayForecastByLocation(
+          event.position.latitude,
+          event.position.longitude,
+        );
+
+         List<List<Weather>> dailyForecast = _separateForecastByDays(forecast);
+
+        emit(WeatherSuccess(weather, dailyForecast));
       } catch (e) {
         emit(WeatherFailure());
       }
     });
+  }
+
+  List<List<Weather>> _separateForecastByDays(List<Weather> forecast) {
+    Map<int, List<Weather>> separatedForecastMap = {};
+
+    // Iterar sobre el pronóstico y agruparlo por días
+    for (Weather weather in forecast) {
+      int day = DateTime.fromMillisecondsSinceEpoch(weather.date!.millisecondsSinceEpoch).day;
+
+      if (!separatedForecastMap.containsKey(day)) {
+        separatedForecastMap[day] = [];
+      }
+
+      separatedForecastMap[day]!.add(weather);
+    }
+
+    // Convertir el mapa a una lista de listas
+    List<List<Weather>> separatedForecast = separatedForecastMap.values.toList();
+
+    return separatedForecast;
   }
 }
