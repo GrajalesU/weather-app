@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Weather App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -30,14 +30,17 @@ class MyApp extends StatelessWidget {
             builder: (context, snap) {
               if (snap.hasData) {
                 return BlocProvider<WeatherBloc>(
-                  create: (context) => WeatherBloc()
-                    ..add(FetchWeather(snap.data as Position)),
+                  create: (context) =>
+                      WeatherBloc()..add(FetchWeather(snap.data as Position)),
                   child: const HomeScreen(),
                 );
               } else {
                 return const Scaffold(
+                  backgroundColor: Colors.black,
                   body: Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                        color: Colors.deepPurple,
+                        backgroundColor: Colors.black),
                   ),
                 );
               }
